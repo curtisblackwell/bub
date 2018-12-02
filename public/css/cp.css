@@ -1,0 +1,14 @@
+:root {
+    --primary:      rgb(155, 52, 8);
+    --primary-dark: rgb(106, 33, 13);
+    --primary-70:   rgba(155, 52, 8, .7);
+    --primary-50:   rgba(155, 52, 8, .5);
+    --primary-30:   rgba(155, 52, 8, .3);
+    --primary-10:   rgba(155, 52, 8, .1);
+    --logo:         var(--primary-dark);
+    --sidebar-icon: var(--primary-dark);
+}
+
+.bg-grad-sidebar {
+    background-image: linear-gradient(to bottom, #9b3408, #fcbd67);
+}
