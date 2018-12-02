@@ -6,22 +6,23 @@ use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\BelongsToMany;
 
-class Diet extends Resource
+class Ingredient extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = 'App\Diet';
+    public static $model = 'App\Ingredient';
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -47,6 +48,7 @@ class Diet extends Resource
                 ->help('Use Title Case.')
                 ->rules('required')
                 ->sortable(),
+            BelongsToMany::make('Diets'),
         ];
     }
 
