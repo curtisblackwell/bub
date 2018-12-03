@@ -12,3 +12,7 @@
 .bg-grad-sidebar {
     background-image: linear-gradient(to bottom, #9b3408, #fcbd67);
 }
+
+.bg-grad-sidebar a {
+    display: block;
+}
