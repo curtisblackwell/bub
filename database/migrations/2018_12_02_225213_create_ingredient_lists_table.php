@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDietListsTable extends Migration
+class CreateIngredientListsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,20 +13,22 @@ class CreateDietListsTable extends Migration
      */
     public function up()
     {
-        Schema::create('diet_lists', function (Blueprint $table) {
-            $table->unsignedInteger('diet_id');
+        Schema::create('ingredient_lists', function (Blueprint $table) {
             $table->unsignedInteger('ingredient_id');
+            $table->unsignedInteger('recipe_id');
+            $table->decimal('amount', 3, 2);
+            $table->string('unit');
 
-            $table
-                ->foreign('diet_id')
-                ->references('id')->on('diets')
-                ->onDelete('cascade');
             $table
                 ->foreign('ingredient_id')
                 ->references('id')->on('ingredients')
                 ->onDelete('cascade');
+            $table
+                ->foreign('recipe_id')
+                ->references('id')->on('recipes')
+                ->onDelete('cascade');
 
-            $table->primary(['diet_id', 'ingredient_id']);
+            $table->primary(['ingredient_id', 'recipe_id']);
         });
     }
 
@@ -37,6 +39,6 @@ class CreateDietListsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('diet_lists');
+        Schema::dropIfExists('ingredient_lists');
     }
 }

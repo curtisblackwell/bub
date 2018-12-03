@@ -2,10 +2,13 @@
 
 namespace App\Nova;
 
-use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Fields\BelongsToMany;
+use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Diet extends Resource
 {
@@ -43,10 +46,26 @@ class Diet extends Resource
     {
         return [
             ID::make()->sortable(),
+
             Text::make('Name')
                 ->help('Use Title Case.')
                 ->rules('required')
                 ->sortable(),
+
+            BelongsToMany::make('Ingredients')
+                ->fields(function () {
+                    return [
+                        Number::make('Amount')->step('0.25')
+                            ->displayUsing(function ($field) {
+                                return $field;
+                            }),
+                        Select::make('Unit')->options([
+                            'dashes' => 'Dashes',
+                            'parts'  => 'Parts',
+                            'whole'  => 'Whole',
+                        ]),
+                    ];
+                }),
         ];
     }
 

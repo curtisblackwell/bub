@@ -4,20 +4,23 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsToMany;
+use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\Markdown;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Ingredient extends Resource
+class Recipe extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = 'App\Ingredient';
+    public static $model = 'App\Recipe';
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -52,9 +55,12 @@ class Ingredient extends Resource
                 ->rules('required')
                 ->sortable(),
 
-            BelongsToMany::make('Diets'),
+            Image::make('Image')
+                ->disk('public')
+                ->path(kebab_case("recipes/{$request->name}"))
+                ->prunable(),
 
-            BelongsToMany::make('Recipes')
+            BelongsToMany::make('Ingredients')
                 ->fields(function () {
                     return [
                         Number::make('Amount')->step('0.25')
@@ -67,8 +73,9 @@ class Ingredient extends Resource
                             'whole'  => 'Whole',
                         ]),
                     ];
-                })
-                ->searchable(),
+                }),
+
+            Markdown::make('Instructions'),
         ];
     }
 

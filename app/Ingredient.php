@@ -15,4 +15,16 @@ class Ingredient extends Model
     {
         return $this->belongsToMany(Diet::class, 'diet_lists');
     }
+
+    /**
+     * Recipes using the ingredient.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function recipes()
+    {
+        return $this
+            ->belongsToMany(Recipe::class, 'ingredient_lists')
+            ->withPivot('amount', 'unit');
+    }
 }

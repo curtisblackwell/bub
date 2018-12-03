@@ -4,15 +4,17 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Diet extends Model
+class Recipe extends Model
 {
     /**
-     * Ingredients compatible with diet.
+     * Ingredients in recipe.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function ingredients()
     {
-        return $this->belongsToMany(Ingredient::class, 'diet_lists');
+        return $this
+            ->belongsToMany(Ingredient::class, 'ingredient_lists')
+            ->withPivot('amount', 'unit');
     }
 }
