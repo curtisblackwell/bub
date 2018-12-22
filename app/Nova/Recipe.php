@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\ID;
@@ -54,6 +55,8 @@ class Recipe extends Resource
                 ->help('Use Title Case.')
                 ->rules('required')
                 ->sortable(),
+
+            BelongsTo::make('Original', 'original', self::class)->nullable(),
 
             Image::make('Image')
                 ->disk('public')
